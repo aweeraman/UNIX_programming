@@ -2,6 +2,7 @@
 #include<unistd.h>
 #include<string.h>
 #include<stdlib.h>
+#include<signal.h>
 
 #define ARG_MAX      80
 #define HOSTNAME_LEN 80
@@ -17,6 +18,9 @@ void prompt() {
   getlogin_r(login, LOGIN_LEN);
 
   printf("%s@%s %s ", login, hn, getuid() == 0 ? "#": "$");
+}
+
+void sig_int(int sig) {
 }
 
 char **get_cmd_args(char *cmd) {
@@ -53,6 +57,10 @@ int main(int argc, char **argv) {
 
   do {
     prompt();
+
+    if (signal(SIGINT, sig_int) == SIG_ERR) {
+      perror(argv[0]);
+    }
 
     if (fgets(cmd, ARG_MAX, stdin) == NULL)
       break;
