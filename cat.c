@@ -19,12 +19,12 @@ int main(int argc, char **argv) {
   fd = open(argv[1], O_RDONLY);
 
   if (fd < 0) {
-    fprintf(stderr, "Error %d opening file: %s\n", errno, argv[1]);
+    perror(argv[0]);
   }
 
   while ((n = read(fd, buffer, BUFSIZE)) > 0) {
     if ((write(STDOUT, buffer, n)) != n) {
-      fprintf(stderr, "Error while writing to standard output!");
+      perror(argv[0]);
     }
   }
 

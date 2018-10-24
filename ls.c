@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
   }
 
   if ((dirp = opendir(argv[1])) == NULL) {
-    fprintf(stderr, "Can't open %s\n", argv[1]);
+    perror(argv[0]);
     exit(2);
   }
 
